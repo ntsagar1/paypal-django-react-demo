@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  python:
+    # build: dev/python
+    build:
+      context: ..
+      dockerfile: docker/python/Dockerfile
+    environment:
+      - DJANGO_SETTINGS_MODULE=settings.settings
+      # - ENV_MODE=development
+    command: python manage.py runserver 0.0.0.0:8888
+    volumes:
+      - ..:/code
+    ports:
+      - "8888:8888"
+    # depends_on:
+    #   - mysql
+    user: '1000:1000'
+    # networks:
+    #   - mysql_network
+
+  # mysql:
+  #   image: mysql
+  #   ports:
+  #     - '3306:3306'
+  #   command: --default-authentication-plugin=mysql_native_password
+  #   # restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #   volumes:
+  #     - ./mysqldata:/var/lib/mysql:rw,delegated
+  #     # - ./db_data:/var/lib/mysql
+  #   networks:
+  #     - mysql_network
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   links:
+  #     - mysql:mysql
+  #   depends_on:
+  #     - mysql
+  #   ports:
+  #     - 8081:80
+  #   environment:
+  #     MYSQL_USERNAME: root
+  #     MYSQL_ROOT_PASSWORD: root
+  #     PMA_HOST: mysql
+  #   networks:
+  #     - mysql_network
+
+  # nodejs:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/dev/nodejs/Dockerfile
+  #   user: '1000:1000'
+  #   environment:
+  #     - NODE_ENV=development
+  #   volumes:
+  #     - ..:/code
+  #   command: ["sh", "../run-node-dev.sh"]
+
+volumes:
+  mysqldata:
+
+networks:
+  mysql_network:
+    driver: bridge

@@ -1,0 +1,9 @@
+Django>=2.2,<3.0
+gunicorn==20.0.4
+psycopg2>=2.7,<3.0
+djangorestframework
+django-webpack-loader
+
+djangorestframework-simplejwt
+
+django-debug-toolbar
