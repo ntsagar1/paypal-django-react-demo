@@ -33,9 +33,7 @@
       // const API_URL = "http://localhost:8888";
       const API_URL = "";
       const orderUrl = "{% url 'create_order' %}";
-      const chargeUrl = "{% url 'order_charge' %}";
       const csrf = "{{csrf_token}}";
-      console.log(">>>ASD>>>>", "{{csrf_token}}");
       const headers = {
         "Content-Type": "Application/json",
         "X-CSRFToken": csrf
@@ -50,16 +48,18 @@
         });
       }
 
-      const handleOrderCharge = async (orderID) => {
+      const handleOrderCharge = async (data) => {
+        const chargeUrl = "order-charge/" + data.orderID + "/" + data.facilitatorAccessToken + "/";
         return await fetch(chargeUrl, {
             method: 'POST',
             headers,
-            data: JSON.stringify({ order_id: orderID })
         }).then(function(res) {
             return res.json();
         }).then(function(details) {
+          console.log(">>>>>", details);
             // Show a success message to the buyer
             alert('Transaction completed by ' + details.payer.name.given_name + '!');
+            return details;
         });
       }
 
@@ -73,7 +73,7 @@
         // Finalize the transaction
         onApprove: async (data, actions) => {
           console.log(">>ASD>>>>>>>>>>>>>", data);
-            return await handleOrderCharge(data.id)
+            return await handleOrderCharge(data)
         },
         onError: err => {
           setError(err);
