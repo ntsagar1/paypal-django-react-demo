@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
+    '259d8d002847.ngrok.io'
 ]
 
 # CSRF_COOKIE_SECURE = True
@@ -125,3 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+## Paypal variables
+PAYPAL_CLEINT_ID=''
+PAYPAL_SECRET_ID=''
