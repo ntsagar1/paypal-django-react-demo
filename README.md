@@ -1,13 +1,24 @@
-# paypal-django-react-demo
-paypal payment button with django API reactjs demo
+# Paypal django React.Js demo
+### paypal payment button with django API reactjs demo
 
-CLEINT_ID='paypal-client-id'
-SECRET_ID='paypal-secret-id'
-
+#### Install django
+```bash
 $ pip3 install django
 
+```
 
-Run app
+#### Set Paypal on settings.py
+```python
+PAYPAL_CLEINT_ID='paypal-client-id'
+PAYPAL_SECRET_ID='paypal-secret-id'
+```
+
+
+#### Run app
+
+```bash
 $ python3 manage.py runserver 0.0.0.0:8888
+```
 
-Open http://localhost:8888
+
+#### Open url [http://localhost:8888](http://localhost:8888)

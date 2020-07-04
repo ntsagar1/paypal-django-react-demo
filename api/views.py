@@ -1,17 +1,20 @@
 from django.shortcuts import render, redirect
-import requests, json
 from requests.auth import HTTPBasicAuth
 from django.http import JsonResponse
-from settings.settings import PAYPAL_CLEINT_ID, PAYPAL_SECRET_ID
+from django.conf import settings as conf_settings
+import requests, json
+
+PAYPAL_CLEINT_ID=conf_settings.PAYPAL_CLEINT_ID
+PAYPAL_SECRET_ID=conf_settings.PAYPAL_SECRET_ID
 
 
 def index_page(request):
-  return render(request, 'main.html', { 'PAYPAL_CLEINT_ID': PAYPAL_SECRET_ID })
+  return render(request, 'main.html', { 'PAYPAL_CLEINT_ID': PAYPAL_CLEINT_ID })
 
 ## Get paypal access token
 def get_paypal_access_token():
   get_token_url='https://api.sandbox.paypal.com/v1/oauth2/token'
-  auth=(PAYPAL_SECRET_ID, PAYPAL_SECRET_ID)
+  auth=(PAYPAL_CLEINT_ID, PAYPAL_SECRET_ID)
   headers = {
     'Accept': 'application/json',
     'Accept-Language': 'en_US',
@@ -56,10 +59,10 @@ def get_create_order(request):
   order = create_order()
   return JsonResponse(order, safe=False)
 
-# ## test api
-# def test_access_token(request):
-#   result = get_paypal_access_token()
-#   print(result.get('expires_in'))
+## test api
+def test_access_token(request):
+  result = get_paypal_access_token()
+  print(result.get('expires_in'))
 
   return JsonResponse(result, safe=False)
 

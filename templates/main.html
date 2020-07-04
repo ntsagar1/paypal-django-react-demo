@@ -1,17 +1,8 @@
-<html>
-  <head>
-    <title>Paypal demo</title>
-  </head>
-  <body>
-    Te4st
-  </body>
-</html>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" sizes="32x32" href="./favicon.webp">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -29,9 +20,6 @@
     <div id="root"></div>
     {% csrf_token %}
     <script>
-
-      // const API_URL = "http://localhost:8888";
-      const API_URL = "";
       const orderUrl = "{% url 'create_order' %}";
       const csrf = "{{csrf_token}}";
       const headers = {
@@ -43,7 +31,7 @@
         .then(function(res) {
             return res.json();
         }).then(function(data) {
-          console.log(">>ASD>>>>", data);
+          console.log(">> Order Created", data);
           return data.id;
         });
       }
@@ -56,10 +44,9 @@
         }).then(function(res) {
             return res.json();
         }).then(function(details) {
-          console.log(">>>>>", details);
-            // Show a success message to the buyer
-            alert('Transaction completed by ' + details.payer.name.given_name + '!');
-            return details;
+          console.log(">> Capture order", details);
+          alert('Transaction completed by ' + details.payer.name.given_name + '!');
+          return details;
         });
       }
 
