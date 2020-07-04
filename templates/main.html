@@ -59,7 +59,7 @@
 
         // Finalize the transaction
         onApprove: async (data, actions) => {
-          console.log(">>ASD>>>>>>>>>>>>>", data);
+            console.log(">>Order request", data);
             return await handleOrderCharge(data)
         },
         onError: err => {
