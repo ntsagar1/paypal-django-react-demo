@@ -6,6 +6,7 @@ import requests, json
 
 PAYPAL_CLEINT_ID=conf_settings.PAYPAL_CLEINT_ID
 PAYPAL_SECRET_ID=conf_settings.PAYPAL_SECRET_ID
+PAYPAL_BASE_URL=conf_settings.PAYPAL_BASE_URL
 
 
 def index_page(request):
@@ -13,7 +14,7 @@ def index_page(request):
 
 ## Get paypal access token
 def get_paypal_access_token():
-  get_token_url='https://api.sandbox.paypal.com/v1/oauth2/token'
+  get_token_url= PAYPAL_BASE_URL+'/v1/oauth2/token'
   auth=(PAYPAL_CLEINT_ID, PAYPAL_SECRET_ID)
   headers = {
     'Accept': 'application/json',
@@ -22,7 +23,6 @@ def get_paypal_access_token():
   }
   payload = 'grant_type=client_credentials'
   result = requests.request("POST", get_token_url, headers=headers, auth=auth, data=payload)
-
   return result.json()
 
 ## Create order
@@ -32,14 +32,14 @@ def create_order():
   access_token = tokenResult.get('access_token')
   token_type = tokenResult.get('token_type')
 
-  create_order_url = "https://api.sandbox.paypal.com/v2/checkout/orders"
+  create_order_url = PAYPAL_BASE_URL+'/v2/checkout/orders'
   payload = {
     "intent": "CAPTURE",
     "purchase_units": [
       {
         "amount": {
           "currency_code": "USD",
-          "value": "2.30"
+          "value": "1"
         }
       }
     ]
@@ -72,7 +72,7 @@ def charge_payment(order_id, paypal_request_id):
   access_token = tokenResult.get('access_token')
   token_type = tokenResult.get('token_type')
 
-  payment_charge_url = "https://api.sandbox.paypal.com/v2/checkout/orders/"+ order_id +"/capture"
+  payment_charge_url = PAYPAL_BASE_URL+'/v2/checkout/orders/'+ order_id +'/capture'
   payload = {}
   headers = {
     'Content-Type': 'application/json',

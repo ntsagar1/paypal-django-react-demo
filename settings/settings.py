@@ -130,3 +130,7 @@ STATIC_URL = '/static/'
 ## Paypal variables
 PAYPAL_CLEINT_ID=''
 PAYPAL_SECRET_ID=''
+PAYPAL_BASE_URL='https://api.sandbox.paypal.com'
+
+# ## Paypal live mode
+# PAYPAL_BASE_URL='https://api.paypal.com'
